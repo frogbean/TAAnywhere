@@ -1,11 +1,5 @@
-```bash
-# Mod Creator
-
-# Clone the repository
+```
 git clone https://github.com/frogbean/TAAnywhere
-
-# Install project dependencies
+cd .\TAAnywhere\
 npm install
-
-# Start the application
 npm start
