@@ -1,0 +1,216 @@
+html {
+    margin: 0;
+    padding: 0;
+    border: 0;
+}
+
+body {
+    background-color: #001100;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    overflow: hidden;
+    user-select: none;
+}
+
+h1, h2, h3, p, a {
+    color: #00FF00;
+    text-shadow: 0 0 5px #00ff0049, 0 0 10px #00ff0049, 0 0 15px #00ff0049;
+    font-family: 'Matrix Code NFI', sans-serif;
+    user-select: none;
+}
+
+h1:hover, h2:hover, h3:hover, p:hover, a:hover {
+    text-shadow: 0 0 10px #00FF00, 0 0 10px #00FF00, 0 0 15px #00FF00;
+}
+a {
+    color: #00FF00;
+    text-decoration: none;
+    transition: color 0.3s ease-in-out;
+}
+
+a:hover {
+    color: #33FF33;
+}
+
+.TAA {
+    position: absolute;
+    left: 5px;
+    top: -15px;
+}
+
+.X {
+    position: absolute;
+    right: 10px;
+    top: -17px;
+    border: 1px solid #00ff009f;
+    border-radius: 2px;
+    width: 30px;
+    height: 30px;
+    text-align: center;
+    line-height: 30px; /* Center the text vertically */
+    vertical-align: middle; /* Center the text vertically */
+    transform: scaleX(1.5); /* Adjust the scaling factor as desired */
+}
+
+.M {
+    position: absolute;
+    right: 56px;
+    top: -17px;
+    border: 1px solid #00ff009f;
+    border-radius: 2px;
+    width: 30px;
+    height: 30px;
+    text-align: center;
+    line-height: 30px; /* Center the text vertically */
+    vertical-align: middle; /* Center the text vertically */
+    transform: scaleX(1.5); /* Adjust the scaling factor as desired */
+}
+
+
+.custom-bar1 {
+    width: 480px;
+    height: 1px;
+    background-color: #00ff009f;
+    border-radius: 10px;
+    position: absolute; 
+    left: 0px;
+    top: 33px;
+    box-shadow: 0 0 50px #00ff009f;
+}
+
+
+.terminal-container {
+    position: absolute;
+    opacity: 0.5;
+    top:230px;
+    left:10px;
+    width: 460px;
+    height: 120px;
+    border: 2px solid #00ff00; 
+    background-color: black;
+    overflow-y: scroll;
+    font-family: monospace;
+    user-select: text;
+    color: #00ff00;
+    border-radius: 5px;
+}
+
+.error {
+    color: #ff0000;
+    font-weight: bold;
+    background-color: #ffff00;
+    border: 1px solid #ff0000;
+}
+
+.terminal-output {
+    padding: 10px;
+    white-space: pre-wrap;
+    user-select: text;
+}
+
+::-webkit-scrollbar {
+    width: 10px;
+}
+  
+::-webkit-scrollbar-thumb {
+    background-color: darkgreen;
+    border-radius: 5px;
+}
+  
+::-webkit-scrollbar-track:hover {
+    color: lightgreen;
+}
+
+
+::-webkit-scrollbar-thumb:hover {
+    background-color: forestgreen;
+}
+
+
+::-webkit-scrollbar-corner {
+    background-color: transparent;
+}
+
+::-webkit-scrollbar-button {
+    display: none;
+}
+
+.filDance {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 170%;
+    height: 110%;
+    z-index: -1;
+}
+
+select {
+    background-color: transparent; /* Remove background color */
+    color: #00ff00;
+    text-shadow: 0 0 5px #00ff0049, 0 0 10px #00ff0049, 0 0 15px #00ff0049;
+    font-family: 'Matrix Code NFI', sans-serif;
+    border: none; /* Remove border */
+    padding: 0; /* Remove padding */
+    font-size: 24px; /* Match the font size with the text next to it */
+    margin-left: 10px; /* Add margin to create space */
+}
+
+.selectContainer select option {
+    background-color: rgb(0, 0, 0); /* Set the background color of options to black */
+    text-shadow: 0 0 5px #00ff0049, 0 0 10px #00ff0049, 0 0 15px #00ff0049;
+    font-family: 'Matrix Code NFI', sans-serif;
+    color: #00ff00;
+    opacity: 0;
+}
+
+.componentText {
+    color: #00FF00;
+    text-shadow: 0 0 5px #00ff0049, 0 0 10px #00ff0049, 0 0 15px #00ff0049;
+    font-family: 'Matrix Code NFI', sans-serif;
+    user-select: none;
+    font-size: 24px;
+}
+
+select::-moz-focus-inner {
+    border: 0;
+}
+
+select:focus {
+    outline: none; /* Remove the focus outline */
+}
+
+.selectContainer {
+    position: absolute;
+    top: 60px;
+    left: 20px;
+    display: inline-flex; /* Make the container inline-flex */
+    align-items: center; /* Center vertically */
+}
+
+.installContainer {
+    position: absolute;
+    top: 120px;
+    left: 22px;
+    display: inline-flex; /* Make the container inline-flex */
+    align-items: center; /* Center vertically */
+}
+
+.installText {
+    background-color: transparent; /* Remove background color */
+    color: #00ff00;
+    text-shadow: 0 0 5px #00ff0049, 0 0 10px #00ff0049, 0 0 15px #00ff0049;
+    font-family: 'Matrix Code NFI', sans-serif;
+    border: none; /* Remove border */
+    padding: 0; /* Remove padding */
+    font-size: 24px; /* Match the font size with the text next to it */
+    margin-left: 10px; /* Add margin to create space */
+}
+
+.hiddenElement {
+    opacity: 0;
+}
+
+.borderGlow {
+    opacity: 1 !important;
+}

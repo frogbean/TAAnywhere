@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <!-- https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP -->
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'">
+  <link rel="stylesheet" type="text/css" href="style.css">
+</head>
+<body>
+
+  <script src="./electrons.js"></script>
+  <h3 class="TAA hover" id="githubClick">Total Annihilation Anywhere</h3>
+  <h3 class="M hover">-</h3>
+  <h3 class="X hover">X</h3>
+  <div class="custom-bar1"></div>
+
+  <audio autoplay loop>
+    <source src="full_bodied.mp3" type="audio/mpeg">
+  </audio>
+
+  <div class="terminal-container" id="myTerminal">
+      <div class="terminal-output" id="terminalOutput"></div>
+  </div>
+
+  <img src="filDance1.gif" class="filDance" draggable="false">
+
+  <div class="selectContainer">
+    <select id="matrixDropdown" class="borderGlow">
+        <option value="OTA">OTA</option>
+        <option value="ESC">ESC</option>
+        <option value="Mayhem">Mayhem</option>
+        <option value="ProTA">ProTA</option>
+    </select>
+  </div>
+
+  <div class="installContainer">
+    <span class="installText hiddenElement borderGlow" id="install">INSTALL</span>
+  </div>
+  
+</body>
+</html>
