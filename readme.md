@@ -21,7 +21,7 @@ app.get('/taa/recipie/:mod', (req, res) => {
 });
 ```
 
-With the recipies.json looking like this
+With the recipies.json looking like this (hashes are sha256
 ```js
 {
     "OTA" : {
@@ -42,3 +42,9 @@ With the recipies.json looking like this
     }
 }
 ```
+
+Build using ```bash
+electron-builder```
+
+If you do not have electron-builder, ```bash
+npm install electron-builder -g```
