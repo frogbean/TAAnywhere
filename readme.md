@@ -43,8 +43,12 @@ With the recipies.json looking like this (hashes are sha256
 }
 ```
 
-Build using ```bash
-electron-builder```
+Build using 
+```bash
+electron-builder
+```
 
-If you do not have electron-builder, ```bash
-npm install electron-builder -g```
+If you do not have electron-builder, 
+```bash
+npm install electron-builder -g
+```
