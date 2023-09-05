@@ -20,7 +20,7 @@ electron-builder build
 ```
 
 
-For details on how I set up the API endpoint, this is the server source (npm install express)
+For details on how I set up the API endpoint, this is the server source (npm install express, bodyparser)
 ```js
 const recipes = {
   "win32.10": require('./win32.10.json'),
@@ -58,7 +58,8 @@ app.get('/taa/recipe/:platform/:mod', (req, res) => {
 // Start the Express server
 app.listen(port, () => {
   console.log('Hosting', recipes, `\nServer is running on http://localhost:${port}`);
-});```
+});
+```
 
 And this is what win32.10.json looks like (use win32.7 for windows 7)
 
@@ -88,4 +89,5 @@ And this is what win32.10.json looks like (use win32.7 for windows 7)
             "hash" : "4d39fac2b2c4ef6724ba755bf6879d27611e73ad6884d44b1ca1ea8712ecebbe"
         }
     }
-}```
+}
+```
