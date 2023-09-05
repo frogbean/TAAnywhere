@@ -20,7 +20,7 @@ electron-builder build
 ```
 
 
-For details on how I set up the API endpoint, this is the server source (npm install express, bodyparser)
+For details on how I set up the API endpoint, this is the server source `npm install express, bodyparser`
 ```js
 const recipes = {
   "win32.10": require('./win32.10.json'),
