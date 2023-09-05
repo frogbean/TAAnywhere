@@ -1,11 +1,20 @@
+Grab this repo
 ```bash
-# Mod Creator
-
-# Clone the repository
 git clone https://github.com/frogbean/TAAnywhere
+```
 
-# Install project dependencies
+Install the dependencies
+```bash
+cd .\TAAnywhere\
 npm install
+```
 
-# Start the application
+To test
+```bash
 npm start
+```
+
+To build
+```bash
+electron-builder build
+```
