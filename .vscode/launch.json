@@ -6,8 +6,8 @@
         "request": "launch",
         "name": "Electron",
         "program": "${workspaceFolder}/node_modules/electron/cli.js",
-        "args": ["."],
-        "cwd": "${workspaceFolder}",
+        "args": ["--trace-warnings","."],
+        "cwd": "${workspaceFolder}", 
         "runtimeExecutable": "${workspaceFolder}/node_modules/electron/dist/electron.exe",
         "windows": {
           "runtimeExecutable": "${workspaceFolder}/node_modules/electron/dist/electron.exe"

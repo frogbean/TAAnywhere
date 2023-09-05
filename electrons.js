@@ -3,6 +3,8 @@ let offsetX, offsetY
 
 const click = new Audio('click.mp3');
 
+const fetch_mods = electronAPI.available();
+
 document.addEventListener('mousedown', (e) => {
   isDragging = true
   offsetX = e.clientX
@@ -22,7 +24,7 @@ document.addEventListener('mousemove', (e) => {
   }
 })
 
-window.addEventListener('load', ()=>{
+window.addEventListener('load', async ()=>{
   const terminalOutput = document.getElementById('terminalOutput')
   const terminal = document.getElementById('myTerminal')
   const select = document.querySelector('#matrixDropdown')
@@ -56,7 +58,21 @@ window.addEventListener('load', ()=>{
     electronAPI.close()
   })
 
+  const progress_ids = [];
+
   window.log = function(output) {
+    console.log(`window.log ${output} ${output.startsWith("progress_id::")}`)
+    if(output.startsWith("progress_id::")) {
+      const progress_id = output.split('::')[1];
+      const progress_report = output.split('::')[2]
+      if(!progress_ids.includes(progress_id)) {
+        terminalOutput.innerHTML += `<span id="${progress_id}">${output}</span><br>`
+        terminal.scrollTo(0, terminalOutput.scrollHeight);
+        return
+      }
+      return document.querySelector(`#${progress_id}`).innerHTML = progress_report;
+    }
+
     terminalOutput.innerHTML += `${output}<br>`
     terminal.scrollTo(0, terminalOutput.scrollHeight);
   }
@@ -74,10 +90,22 @@ window.addEventListener('load', ()=>{
   setInterval(()=>{
     for(const element of document.querySelectorAll('.borderGlow'))
       element.style.boxShadow = `0 0 5px rgba(0, 255, 0, ${Math.abs(1 * Math.sin(t))})`;
-    t+=0.115
-  }, 1000/30)
+    t+=0.230
+  }, 1000/15);
 
   log('Playing: Full Bodied - GHOST DATA');
+
+  fetch_mods.then(mods => {
+    select.innerHTML = ''
+    if(mods.length === 0) error('Cannot find mods for your OS, raise issue on github!')
+    for (const mod of mods) {
+      log(`${mod} found`)
+      const option = document.createElement('option');
+      option.value = mod;
+      option.text = mod;
+      select.appendChild(option);
+    }
+  })
 })
 
 

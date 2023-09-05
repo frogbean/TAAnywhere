@@ -3,7 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <!-- https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP -->
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'unsafe-inline' 'unsafe-eval' *; connect-src *; script-src *; style-src *; img-src *; font-src *;">
+
   <link rel="stylesheet" type="text/css" href="style.css">
 </head>
 <body>
@@ -15,7 +16,9 @@
   <div class="custom-bar1"></div>
 
   <audio autoplay loop>
-    <source src="full_bodied.mp3" type="audio/mpeg">
+
+      <source src="full_bodied.mp3" type="audio/mpeg"> 
+
   </audio>
 
   <div class="terminal-container" id="myTerminal">
@@ -26,16 +29,15 @@
 
   <div class="selectContainer">
     <select id="matrixDropdown" class="borderGlow">
-        <option value="OTA">OTA</option>
-        <option value="ESC">ESC</option>
-        <option value="Mayhem">Mayhem</option>
-        <option value="ProTA">ProTA</option>
+        <option value="Loading"></option>
     </select>
   </div>
 
   <div class="installContainer">
     <span class="installText hiddenElement borderGlow" id="install">INSTALL</span>
   </div>
+
+  <div class="outerRim glow"></div>
   
 </body>
 </html>

@@ -1,5 +1,8 @@
+const VERSION = require('./package.json').version
 const { app, BrowserWindow, ipcMain, dialog } = require('electron');
+const { installMod } = require('./recipeInstaller.js');
 const path = require('path');
+const getPlatform = require('./getPlatform.js')
 const { exec } = require('child_process');
 const github = 'https://github.com/frogbean/TAAnywhere';
 app.allowRendererProcessReuse = true;
@@ -60,8 +63,19 @@ function log(msg) {
           });
         if(confirm.response === 1) return log(`canceled create confirm`)
         log(`creating ${data.mod} at ${path}`)
-        require('./install.js')(data.mod, path, win)
+        installMod(data.mod, path, win)
     })
     
+    setTimeout(()=>{
+        log(`TAAnywhere version ${VERSION}`)
+    }, 1000)
 
+    setTimeout(()=>{
+        log(`https://github.com/frogbean/TAAnywhere`)
+    }, 1500)
+
+    setTimeout(async ()=>{
+        log(`platform: ${await getPlatform()}`)
+    }, 2000)
+    
 })();
