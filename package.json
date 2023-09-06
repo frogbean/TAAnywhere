@@ -1,7 +1,7 @@
 {
   "name": "taanywhere",
   "version": "1.0.0",
-  "description": "",
+  "description": "A Total Annihilation mod installer",
   "main": "main.js",
   "scripts": {
     "start": "electron ."
