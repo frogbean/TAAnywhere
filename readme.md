@@ -21,6 +21,7 @@ To build
 yarn make
 ```
 
+(If you don't have yarn, `npm install -global yarn`)
 
 For details on how I set up the API endpoint, this is the server source `npm install express, bodyparser`
 ```js
