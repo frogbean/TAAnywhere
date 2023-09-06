@@ -1,8 +1,6 @@
-const VERSION = require('./package.json').version
-const { app, BrowserWindow, ipcMain, dialog } = require('electron');
+const { app, BrowserWindow, ipcMain, dialog, ipcRenderer } = require('electron');
 const { installMod } = require('./recipeInstaller.js');
 const path = require('path');
-const getPlatform = require('./getPlatform.js')
 const { exec } = require('child_process');
 const github = 'https://github.com/frogbean/TAAnywhere';
 app.allowRendererProcessReuse = true;

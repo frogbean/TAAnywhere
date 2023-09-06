@@ -136,12 +136,21 @@ a:hover {
     display: none;
 }
 
-.filDance {
+.vidBg {
     position: absolute;
-    top: 0;
-    left: 0;
-    width: 170%;
-    height: 110%;
+    top: 0px;
+    left: 0px;
+    width: 480px;
+    height: 360px;
+    z-index: -1;
+}
+
+.vid {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: auto;
+    height: 360px;
     z-index: -1;
 }
 

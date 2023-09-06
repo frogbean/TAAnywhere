@@ -1,13 +1,13 @@
-const { contextBridge, ipcRenderer, window } = require('electron')
+const { contextBridge, ipcRenderer } = require('electron')
 const created = new Audio('created.mp3');
 const getPlatform = require('./getPlatform.js')
-const packageJson = require('./package.json');
+const packageJson = require('./../package.json')
 
 let is_locked = false;
 
 async function available() {
     const TAA_API = require('./shared.json').endpoint
-    const available_url = `${TAA_API}/list/${await getPlatform()}`; //http://212.71.238.61:9000/taa/list/win32.10
+    const available_url = `${TAA_API}/list/${await getPlatform()}`;
     const response = await fetch(available_url)
 
     if (response.ok) {

@@ -10,8 +10,6 @@ const click = new Audio('click.mp3');
 
 const fetch_mods = electronAPI.available();
 
-
-
 document.addEventListener('mousedown', (e) => {
   isDragging = true
   offsetX = e.clientX
@@ -104,8 +102,6 @@ window.addEventListener('load', async ()=>{
   log(`${packageJson.description}`)
   log(`https://github.com/frogbean/TAAnywhere`)
   log(`Platform: ${platform}`)
-  log('Playing: Full Bodied - GHOST DATA');
-
 
   fetch_mods.then(mods => {
     select.innerHTML = ''
@@ -120,6 +116,4 @@ window.addEventListener('load', async ()=>{
     }
   })
 })
-
-
 
