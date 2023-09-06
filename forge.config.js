@@ -1,19 +1,20 @@
 module.exports = {
   packagerConfig: {
     asar: true,
+    ignore: [/\/src\/downloads\//, /\/src\/temp\//]
   },
   rebuildConfig: {},
   makers: [
     {
-      name: '@electron-forge/maker-squirrel',
+      name: "@rabbitholesyndrome/electron-forge-maker-portable", //windows portable
       config: {},
     },
     {
-      name: '@electron-forge/maker-deb',
+      name: '@electron-forge/maker-deb', //linux
       config: {},
     },
     {
-      name: '@electron-forge/maker-rpm',
+      name: '@electron-forge/maker-rpm', //mac
       config: {},
     },
   ],
