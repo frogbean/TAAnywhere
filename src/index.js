@@ -13,6 +13,8 @@ function log(msg) {
     await app.whenReady()
     
     globalThis.win = new BrowserWindow({
+        title: 'TAAnywhere', 
+        icon: path.join(__dirname, 'icon.png'), 
         width: 480,
         height: 360,
         frame: false,

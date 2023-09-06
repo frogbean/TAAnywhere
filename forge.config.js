@@ -1,6 +1,7 @@
 module.exports = {
   packagerConfig: {
     asar: true,
+    ignore: ["./downloads", "./temp"]
   },
   rebuildConfig: {},
   makers: [
