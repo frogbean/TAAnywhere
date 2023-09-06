@@ -1,13 +1,16 @@
 module.exports = {
   packagerConfig: {
     asar: true,
-    ignore: [/\/src\/downloads\//, /\/src\/temp\//]
+    ignore: [/\/src\/downloads\//, /\/src\/temp\//],
+    icon: "icon"
   },
   rebuildConfig: {},
   makers: [
     {
       name: "@rabbitholesyndrome/electron-forge-maker-portable", //windows portable
-      config: {},
+      config: {
+        setupIcon: '/icon.png'
+      },
     },
     {
       name: '@electron-forge/maker-deb', //linux

@@ -14,7 +14,7 @@ function log(msg) {
     
     globalThis.win = new BrowserWindow({
         title: 'TAAnywhere', 
-        icon: path.join(__dirname, 'icon.png'), 
+        icon: 'icon.png', 
         width: 480,
         height: 360,
         frame: false,
