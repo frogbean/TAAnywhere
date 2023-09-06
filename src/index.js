@@ -26,9 +26,9 @@ function log(msg) {
     })
 
     //uncomment to get access to dev tools
-    //win.webContents.openDevTools();
+    win.webContents.openDevTools();
     
-    win.loadFile('index.html')
+    win.loadFile('./src/index.html')
 
     ipcMain.on('dragWindow', (event, x, y) => {
         win.setPosition(x, y);

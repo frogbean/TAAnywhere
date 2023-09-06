@@ -4,17 +4,11 @@
       {
         "type": "node",
         "request": "launch",
-        "name": "Electron",
-        "program": "${workspaceFolder}/node_modules/electron/cli.js",
-        "args": ["--trace-warnings","."],
-        "cwd": "${workspaceFolder}", 
-        "runtimeExecutable": "${workspaceFolder}/node_modules/electron/dist/electron.exe",
-        "windows": {
-          "runtimeExecutable": "${workspaceFolder}/node_modules/electron/dist/electron.exe"
-        },
-        "env": {},
-        "sourceMaps": true,
-        "outFiles": []
+        "name": "Start with Yarn",
+        "runtimeExecutable": "yarn",
+        "runtimeArgs": ["start"],
+        "cwd": "${workspaceFolder}",
+        "console": "integratedTerminal"
       }
     ]
   }

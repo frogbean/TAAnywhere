@@ -1,42 +1,33 @@
 {
   "name": "taanywhere",
+  "productName": "taanywhere",
   "version": "1.0.0",
-  "description": "A Total Annihilation mod installer",
-  "main": "main.js",
+  "description": "My Electron application description",
+  "main": "src/index.js",
   "scripts": {
-    "start": "electron ."
+    "start": "electron-forge start",
+    "package": "electron-forge package",
+    "make": "electron-forge make",
+    "publish": "electron-forge publish",
+    "lint": "echo \"No linting configured\""
   },
-  "author": "frogbean",
-  "license": "ISC",
-  "build": {
-    "appId": "com.frogbean.taanywhere",
-    "productName": "TAA Anywhere",
-    "directories": {
-      "output": "dist"
-    },
-    "mac": {
-      "target": "dmg",
-      "category": "public.app-category.games"
-    },
-    "win": {
-      "target": "nsis"
-    },
-    "linux": {
-      "target": "AppImage"
-    },
-    "extraResources": [
-      {
-        "from": "node_modules/7zip-bin",
-        "to": "./resources/7zip-bin"
-      }
-    ]
+  "keywords": [],
+  "author": {
+    "name": "frogbean",
+    "email": "49106938+frogbean@users.noreply.github.com"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "7zip-bin": "^5.2.0",
+    "electron-squirrel-startup": "^1.0.0"
   },
   "devDependencies": {
-    "electron": "^26.1.0",
-    "electron-builder": "^24.6.3",
-    "electron-debug": "^3.2.0"
-  },
-  "dependencies": {
-    "7zip-bin": "^5.2.0"
+    "@electron-forge/cli": "^6.4.1",
+    "@electron-forge/maker-deb": "^6.4.1",
+    "@electron-forge/maker-rpm": "^6.4.1",
+    "@electron-forge/maker-squirrel": "^6.4.1",
+    "@electron-forge/maker-zip": "^6.4.1",
+    "@electron-forge/plugin-auto-unpack-natives": "^6.4.1",
+    "electron": "26.1.0"
   }
 }

@@ -1,3 +1,5 @@
+TAAnywhere - Install any mod of TA on any device
+
 Grab this repo
 ```bash
 git clone https://github.com/frogbean/TAAnywhere
@@ -11,12 +13,12 @@ npm install
 
 To test
 ```bash
-npm start
+yarn start
 ```
 
 To build
 ```bash
-electron-builder build
+yarn make
 ```
 
 
