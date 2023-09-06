@@ -6,7 +6,7 @@
   "scripts": {
     "start": "electron ."
   },
-  "author": "",
+  "author": "frogbean",
   "license": "ISC",
   "build": {
     "appId": "com.frogbean.taanywhere",
@@ -16,7 +16,7 @@
     },
     "mac": {
       "target": "dmg",
-      "category": "taanywhere.frogbean.nodejs"
+      "category": "public.app-category.games"
     },
     "win": {
       "target": "nsis"
