@@ -1,6 +1,7 @@
 const { contextBridge, ipcRenderer, window } = require('electron')
 const created = new Audio('created.mp3');
 const getPlatform = require('./getPlatform.js')
+const packageJson = require('./package.json');
 
 let is_locked = false;
 
@@ -25,7 +26,9 @@ contextBridge.exposeInMainWorld('electronAPI', {
     install: mod => ipcRenderer.send('install', {mod}),
     github: () => ipcRenderer.send('github'),
     locked: () => { return is_locked },
-    available: async () => await available()
+    available: async () => await available(),
+    getPlatform: async ()=> await getPlatform(),
+    getPackage: ()=> packageJson,
 })
 
 ipcRenderer.on('error', (event, message) => {

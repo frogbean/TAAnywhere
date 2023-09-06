@@ -1,9 +1,16 @@
+let platform = '', packageJson =  electronAPI.getPackage();
+(async ()=> {
+  platform = await electronAPI.getPlatform();
+})();
+
 let isDragging = false
 let offsetX, offsetY
 
 const click = new Audio('click.mp3');
 
 const fetch_mods = electronAPI.available();
+
+
 
 document.addEventListener('mousedown', (e) => {
   isDragging = true
@@ -93,13 +100,19 @@ window.addEventListener('load', async ()=>{
     t+=0.230
   }, 1000/15);
 
+  log(`TAAnywhere version ${packageJson.version}`)
+  log(`${packageJson.description}`)
+  log(`https://github.com/frogbean/TAAnywhere`)
+  log(`Platform: ${platform}`)
   log('Playing: Full Bodied - GHOST DATA');
+
 
   fetch_mods.then(mods => {
     select.innerHTML = ''
-    if(mods.length === 0) error('Cannot find mods for your OS, raise issue on github!')
+    if(mods.length === 0) error('Cannot find mods for your OS, This is likely a bug or the server is down')
+    log(`Available mods for ${platform}: ${mods.join(', ')}`)
+
     for (const mod of mods) {
-      log(`${mod} found`)
       const option = document.createElement('option');
       option.value = mod;
       option.text = mod;

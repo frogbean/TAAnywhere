@@ -65,17 +65,6 @@ function log(msg) {
         log(`creating ${data.mod} at ${path}`)
         installMod(data.mod, path, win)
     })
-    
-    setTimeout(()=>{
-        log(`TAAnywhere version ${VERSION}`)
-    }, 1000)
 
-    setTimeout(()=>{
-        log(`https://github.com/frogbean/TAAnywhere`)
-    }, 1500)
-
-    setTimeout(async ()=>{
-        log(`platform: ${await getPlatform()}`)
-    }, 2000)
     
 })();

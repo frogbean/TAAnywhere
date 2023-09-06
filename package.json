@@ -2,7 +2,7 @@
   "name": "taanywhere",
   "productName": "taanywhere",
   "version": "1.0.0",
-  "description": "My Electron application description",
+  "description": "A installer for Total annihilation and it's mods",
   "main": "src/index.js",
   "scripts": {
     "start": "electron-forge start",

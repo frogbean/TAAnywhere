@@ -3,6 +3,16 @@ const path = require('path');
 const sleep = ms => new Promise(r => setTimeout(r, ms));
 const fs = require('fs');
 
+function rmdir(directoryPath, dontDeleteFolder = false) {
+    if (!fs.existsSync(directoryPath)) return;
+    if (!dontDeleteFolder) fs.rmdirSync(directoryPath, { recursive: true });
+    else for(const file of fs.readdirSync(directoryPath)) {
+        const filePath = `${directoryPath}/${file}`;
+        if (fs.lstatSync(filePath).isDirectory()) rmdir(filePath);
+        else fs.unlinkSync(filePath);
+    }
+}
+
 const getPlatform = require('./getPlatform.js')
 const recipeApiEndpoint = require('./shared.json').endpoint
 
@@ -82,6 +92,7 @@ if( isMainThread ) {
                 window.webContents.send('error', `code ${status}, install not complete`)
             }
             
+            if(status === -1) rmdir(where, true); //true to just empty instead of delete
             resolve(status)
         })
     }
@@ -109,17 +120,12 @@ else {
     const download_folder = path.join(exePath, 'downloads');
 
     fs.mkdir(tempPath, { recursive: true }, (err) => {
-        if (err) parentPort.postMessage((new Error(`Error making ${tempPath} ${err.message}`))) 
+        //if (err) parentPort.postMessage((new Error(`Error making ${tempPath} ${err.message}`))) 
     })
 
     fs.mkdir(download_folder, { recursive: true }, (err) => {
-        if (err) parentPort.postMessage((new Error(`Error making ${download_folder} ${err.message}`))) 
+        //if (err) parentPort.postMessage((new Error(`Error making ${download_folder} ${err.message}`))) 
     })
-
-    function rmdir(directoryPath) {
-        if(!fs.existsSync(directoryPath)) return
-        fs.rm(directoryPath, { recursive: true }, err => err)
-    }
     
     if(workerType === 'extract') {
 
@@ -129,22 +135,25 @@ else {
         rmdir(tempPath);
 
         function extract(source, path) {
-
+            if(terminate_signal) return -1;
             parentPort.postMessage(`Extracting ${prettyPath(source)} to ${prettyPath(path)}`);
             
             try {
                 execFileSync(Seven.path7za, ['x', source, '-o' + path], { stdio: 'ignore' });
                 parentPort.postMessage(`${prettyPath(source)} done`);
             } catch (err) {
-                parentPort.postMessage(new Error(`${source} failed ${err.message}`));
+                parentPort.postMessage(new Error(`Cannot extract ${err.message}`));
+                return -1
             }
+            return 1
         }
 
          /* Install que example {step: int, zip: dir, folders: []} */
         const install_que = [];
-        let current_install_step = 1;
+        let current_install_step = 1, terminate_signal = 0;
 
         parentPort.on('message', interWorkerCom => {
+            if(interWorkerCom === -1) return terminate_signal = 1; 
             const { installQueItem } = interWorkerCom;
             install_que.push(installQueItem)
         })
@@ -162,17 +171,26 @@ else {
         async function installer() {
             while(true) {
                 const ingredient = await getNextIngredient();
+
                 const { step, zip, folders } = ingredient;
                 const stepPath = path.join(tempPath, step + '');
-                extract(zip, stepPath)
+
+                if(extract(zip, stepPath) === -1) {
+                    parentPort.postMessage((new Error(`Aborting install due to bad file ${prettyPath(zip)}`)))
+                    parentPort.postMessage({status: -1})
+                    return -1;
+                }
+
                 await sleep(100);
 
                 try {
                     if(folders.length === 0) {
+                        if(terminate_signal) return;
                         parentPort.postMessage(`Copying ${prettyPath(stepPath)} to ${prettyPath(where)}`)
                         await fs.promises.cp(stepPath, where, {recursive: true})
                     }
                     else for(const folder of folders) {
+                        if(terminate_signal) return;
                         const subStepPath = path.join(stepPath, folder)
                         parentPort.postMessage(`Copying ${prettyPath(subStepPath)} to ${prettyPath(where)}`)
                         await fs.promises.cp(subStepPath, where, {recursive: true})
@@ -289,7 +307,8 @@ else {
             for(const mirror of mirrors) {
                 try { await download(mirror, save_location) }
                 catch (err) { parentPort.postMessage((new Error(`Failed to download ${mirror} ${err.message}`))); continue }
-                if(verify(save_location, filehash)) { parentPort.postMessage(`${filename} downloaded`); return 1; }
+
+                if(await verify(save_location, filehash)) { parentPort.postMessage(`${filename} downloaded`); return 1; }
 
                 parentPort.postMessage((new Error(`${filename} failed sha256 verification`)))
 
@@ -308,10 +327,12 @@ else {
 
                 try { await download(mirror, save_location) }
                 catch (err) { parentPort.postMessage((new Error(`Failed to download ${mirror} ${err.message}`))); continue }
-                if(verify(save_location, filehash)) { parentPort.postMessage(`${filename} downloaded`); return 1; }
+                if(await verify(save_location, filehash)) { parentPort.postMessage(`${filename} downloaded`); return 1; }
                 parentPort.postMessage(`${mirror} bad file`)
             }
-            return -1
+
+            parentPort.postMessage({interWorkerCom: -1})
+            return parentPort.postMessage({status: -1}) //failed to download a file
         }
 
         let step = 1, step_progress = {}
@@ -333,6 +354,7 @@ else {
             downloader(mirrors, filename, hash).then(status => {
                 if(status < 0) {
                     parentPort.postMessage((new Error(`Fatal install error ${status}, cannot download ingredient`)))
+                    parentPort.postMessage({interWorkerCom: -1})
                     parentPort.postMessage({status: -1}) //terminates the main install function
                 }
                 parentPort.postMessage(com_map.get(map_id))
