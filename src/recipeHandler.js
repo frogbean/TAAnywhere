@@ -16,20 +16,6 @@ function rmdir(directoryPath, dontDeleteFolder = false) {
 const getPlatform = require('./getPlatform.js')
 const recipeApiEndpoint = require('./shared.json').endpoint
 
-function randomString() {
-    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-    let randomString = '';
-
-    for (let i = 0; i < 32; i++) 
-        randomString += characters.charAt(Math.floor(Math.random() * characters.length));
-
-    return randomString;
-}
-
-function prettyPath(path) {
-    return path.split('\\').map(folder => folder.length > 16 ? folder.slice(0, 16) + ' ... ' : folder).slice(-2).join('\\')
-}
-
 if( isMainThread ) {
 
     /* This is the start of the worker, this script runs in the main thread when we import this file in our electron app */
@@ -252,19 +238,20 @@ else {
         async function download(url, save_location) {
 
             let download_status = 0;
-
             const protocol = ([https, http])[url.startsWith('https') ? 0 : 1]
+
             protocol.get(url, response => {
+
                 if (response.statusCode !== 200) return download_status = -1;
+
                 const fileStream = fs.createWriteStream(save_location);
-
-                const doTotal = ('content-length' in response.headers) ? true : false;
+                const doTotal = 'content-length' in response.headers;
+                const totalSize = doTotal ? parseInt(response.headers['content-length'], 10) : 0;
                 const progress_id = randomString();
-                const totalSize = parseInt(response.headers['content-length'], 10);
-                const startTime = Date.now();
                 const fileName = url.split('/').pop();
-                let downloadedSize = 0;
+                const startTime = Date.now();
 
+                let downloadedSize = 0;
                 let modulas = 0;
 
                 function bitsToMBytes(bits) {
@@ -384,3 +371,19 @@ else {
     }
 
 }
+
+
+/* utils */
+function randomString() {
+    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    let randomString = '';
+
+    for (let i = 0; i < 32; i++) 
+        randomString += characters.charAt(Math.floor(Math.random() * characters.length));
+
+    return randomString;
+}
+function prettyPath(path) {
+    return path.split('\\').map(folder => folder.length > 16 ? folder.slice(0, 16) + ' ... ' : folder).slice(-2).join('\\')
+}
+/* utils end */

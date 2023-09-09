@@ -5,8 +5,13 @@ module.exports = () => new Promise(resolve => {
     require('child_process').exec('ver', (e,s) => {
         try {
             const ver = parseInt(s.split('[')[1].split(' ')[1].split('.')[0]);
-            resolve(`${process.platform}.${ver > 7 ? 10 : 7}`)
-        } catch (error) {
+            try {
+                resolve(`${process.platform}.${ver >= 7 ? 10 : 7}`)
+            } catch (err) {
+                resolve(`win32.${ver}`)
+            }
+            
+        } catch (err) {
             resolve(`${process.platform}.10`)
         }
     })
