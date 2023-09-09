@@ -24,6 +24,7 @@ yarn make
 (If you don't have yarn, `npm install -global yarn`)
 
 For details on how I set up the API endpoint, this is the server source `npm install express, bodyparser`
+The client will only request win32.10 and win32.xp for windows but otherwise is simply `process.platform`
 ```js
 const recipes = {
   "win32.10": require('./win32.10.json'),
