@@ -8,9 +8,7 @@ module.exports = {
   makers: [
     {
       name: "@rabbitholesyndrome/electron-forge-maker-portable", //windows portable
-      config: {
-        setupIcon: '/icon.png'
-      },
+      config: {},
     },
     {
       name: '@electron-forge/maker-deb', //linux

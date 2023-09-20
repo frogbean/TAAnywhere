@@ -4,6 +4,7 @@ const path = require('path');
 const { exec } = require('child_process');
 const github = 'https://github.com/frogbean/TAAnywhere';
 app.allowRendererProcessReuse = true;
+
 function log(msg) {
     win.webContents.send('log', msg)
 }
@@ -11,10 +12,14 @@ function log(msg) {
 (async()=>{
 
     await app.whenReady()
-    
+
+    if (process.platform === 'darwin') { // Check if it's macOS
+        app.dock.setIcon(path.join(__dirname, 'icon.ico'));
+    }
+
     globalThis.win = new BrowserWindow({
         title: 'TAAnywhere', 
-        icon: 'icon.png', 
+        icon: path.join(__dirname, 'icon.ico'), 
         width: 480,
         height: 360,
         frame: false,
