@@ -26,7 +26,7 @@ function log(msg) {
     })
 
     //uncomment to get access to dev tools
-    //win.webContents.openDevTools();
+    win.webContents.openDevTools();
     
     win.loadFile('./src/index.html')
 
