@@ -29,7 +29,7 @@ async function installMod(mod, target, window) {
         return -1
     }
 
-    const install_status = await install(MOD_recipe, target, window);
+    const install_status = await install(MOD_recipe, target, window, mod);
     window.webContents.send('unlock')
     if(install_status === 1) window.webContents.send('success')
 }

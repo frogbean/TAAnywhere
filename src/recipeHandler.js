@@ -33,7 +33,7 @@ if( isMainThread ) {
      *   - 1: Installation successful.
      *   - -1: Installation failed.
      */
-    function install(recipe, where, window = {}) {
+    function install(recipe, where, window = {}, modName = '') {
         return new Promise(async resolve => {
             let status = 0
             const platform = await getPlatform()
@@ -72,10 +72,11 @@ if( isMainThread ) {
             while(status === 0) await sleep(10)
 
             if(status === 1) {
-                window.webContents.send('log', 'Mod installed successfully')
+                window.webContents.send('log', `${modName} created at ${where}`)
                 window.webContents.send('created')
             } else {
                 window.webContents.send('error', `code ${status}, install not complete`)
+                window.webContents.send('error', `contact Zombean on TAU discord https://discord.gg/g6N8T9X83R`)
             }
             
             if(status === -1) rmdir(where, true); //true to just empty instead of delete
@@ -234,7 +235,7 @@ else {
         */
 
         const { recipe } = workerData
-
+        
         async function download(url, save_location) {
 
             let download_status = 0;
@@ -242,7 +243,7 @@ else {
 
             protocol.get(url, response => {
 
-                if (response.statusCode !== 200) return download_status = -1;
+                if (response.statusCode !== 200) return download_status = "NON_200_STATUS";
 
                 const fileStream = fs.createWriteStream(save_location);
                 const doTotal = 'content-length' in response.headers;
@@ -272,18 +273,26 @@ else {
                 
                 response.on('end', () => {
                     fileStream.end()
-                    download_status = 1;
+                    download_status = "SUCCESS";
                 })
     
                 response.on('error', err => {
                     parentPort.postMessage((new Error(`url get error ${err.message}`)))
-                    download_status = -2;
+                    download_status = "DOWNLOAD_ERROR";
                 })
-            })
+            }).on('error', err => {
+                // Catch errors from protocol.get() itself
+                if(err.message.includes('certificate has expired for')) {
+                    parentPort.postMessage(new Error(`${url} ssl certificate error`));
+                    return download_status = "SSL_ERROR";
+                }
+                parentPort.postMessage(err);
+                download_status = "UNKOWN ERROR";
+            });
 
             while(download_status === 0) await sleep(10);
-            return download_status;
-
+            if(download_status !== "SUCCESS") throw new Error(download_status);
+            return 1;
         }
 
         async function downloader(mirrors, filename, filehash) {
@@ -338,14 +347,20 @@ else {
             step_progress[step] = false;
             step ++;
 
-            downloader(mirrors, filename, hash).then(status => {
-                if(status < 0) {
-                    parentPort.postMessage((new Error(`Fatal install error ${status}, cannot download ingredient`)))
+            downloader(mirrors, filename, hash)
+                .then(status => {
+                    if(status < 0) {
+                        parentPort.postMessage((new Error(`Fatal install error ${status}, cannot download ${filename}`)))
+                        parentPort.postMessage({interWorkerCom: -1})
+                        parentPort.postMessage({status: -1}) //terminates the main install function
+                    }
+                    parentPort.postMessage(com_map.get(map_id))
+                })
+                .catch(err => {
+                    parentPort.postMessage((new Error(`Fatal install error ${err.message}, cannot download ${filename}`)))
                     parentPort.postMessage({interWorkerCom: -1})
                     parentPort.postMessage({status: -1}) //terminates the main install function
-                }
-                parentPort.postMessage(com_map.get(map_id))
-            })
+                })
         }
 
         parentPort.on('message', interWorkerCom => {
