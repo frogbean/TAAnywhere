@@ -17,7 +17,9 @@ function log(msg) {
         app.dock.setIcon(path.join(__dirname, 'icon.ico'));
     }
 
-        globalThis.win = new BrowserWindow({
+    let appWidth = 480, appHeight = 360;
+
+    globalThis.win = new BrowserWindow({
         title: 'TAAnywhere', 
         icon: path.join(__dirname, 'icon.ico'), 
         width: appWidth,
