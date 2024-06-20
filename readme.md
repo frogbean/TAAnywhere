@@ -1,4 +1,4 @@
-TAAnywhere - Install any mod of TA on any device
+#TAAnywhere - Install any mod of TA on any device
 
 Grab this repo
 ```bash
@@ -23,7 +23,10 @@ yarn make
 
 (If you don't have yarn, `npm install -global yarn`)
 
-For details on how I set up the API endpoint, this is the server source `npm install express, bodyparser`
+#how I set up the API endpoint
+
+api endpoint is set in `shared.json` file in `/src`
+this is the server source `npm install express bodyparser`
 The client will only request win32.10 and win32.xp for windows but otherwise is simply `process.platform`
 ```js
 const recipes = {
