@@ -80,20 +80,15 @@ And this is what win32.10.json looks like (use win32.7 for windows 7)
         }
     },
     "ProTA" : {
+        "OTA.zip" : {
+              "mirrors" : ["http://212.71.238.61:9001/OTA.zip"],
+              "folders": [],
+              "hash" : "1108bcb0b5aeaf816d92c1d0f20f22a0c5accecea92d1ad79205582b738ef51b"
+          },
         "ProTA.zip" : {
             "mirrors" : ["https://prota.tauniverse.com/ProTA4.5.zip"],
             "folders": [],
             "hash" : "025c3c79560b64d9b8f43c27490889b3eb8ef62454310970bea09e49d36af63d"
-        }
-    },
-    "ESC" : {
-        "TAESC_GOLD_9_9_5.zip" : {
-            "mirrors" : ["http://212.71.238.61:9001/TAESC_GOLD_9_9_5.zip"],
-            "folders": [
-                "Step_2_Install Main Files (copy all contents into your main TA folder)",
-                "Step_3_Install For Windows 8 or 10 or 11 or LINUX only (do not use with DXWND or Windows 7!)\\Windows 8 or 10 or 11\\"
-            ],
-            "hash" : "4d39fac2b2c4ef6724ba755bf6879d27611e73ad6884d44b1ca1ea8712ecebbe"
         }
     }
 }
