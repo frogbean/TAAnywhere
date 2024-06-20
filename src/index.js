@@ -17,11 +17,11 @@ function log(msg) {
         app.dock.setIcon(path.join(__dirname, 'icon.ico'));
     }
 
-    globalThis.win = new BrowserWindow({
+        globalThis.win = new BrowserWindow({
         title: 'TAAnywhere', 
         icon: path.join(__dirname, 'icon.ico'), 
-        width: 480,
-        height: 360,
+        width: appWidth,
+        height: appHeight,
         frame: false,
         resizable: false,
         webPreferences: {
@@ -35,8 +35,13 @@ function log(msg) {
     
     win.loadFile('./src/index.html')
 
+    let prev_x, prev_y;
+
     ipcMain.on('dragWindow', (event, x, y) => {
+        if(x == prev_x && y == prev_y) return;
+        prev_x = x, prev_y = y;
         win.setPosition(x, y);
+        globalThis.win.setSize(appWidth, appHeight);
     });
 
     ipcMain.on('minimize', (event, x, y) => {
